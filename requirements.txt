@@ -1,0 +1,17 @@
+streamlit
+langchain
+langchain-community
+langchain-core
+langchain-google-genai
+langchain-text-splitters
+langchain-pinecone
+langchain-classic
+pinecone
+sentence-transformers
+transformers
+torch
+google-generativeai
+python-dotenv
+requests
+serpapi
+huggingface-hub

@@ -1,4 +1,4 @@
 {
     "$schema": "https://railpack.com/schema.json",
-    "start": "streamlit run app.py --server.port $PORT --server.address 0.0.0.0"
+    "start": "streamlit run ytchatbot.py --server.port $PORT --server.address 0.0.0.0"
 }

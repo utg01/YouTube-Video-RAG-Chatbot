@@ -36,7 +36,7 @@ if api:
 
 
 reranker = CrossEncoder(
-    "cross-encoder/ms-marco-MiniLM-L-6-v2"
+    ".models/reranker"
 )
 
 st.header("Welcome to the Youtube Chatbot")
@@ -362,4 +362,3 @@ if api:
             st.session_state.conversation_history.append(AIMessage(content=response.content))    
         humanmsg = st.chat_input("You: ")
     del st.session_state.conversation_history
-    st.rerun()

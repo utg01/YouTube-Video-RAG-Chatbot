@@ -30,9 +30,9 @@ if api:
         model="gemini-2.5-flash",
         api_key=api
     )
-pc=Pinecone(
-    api_key=os.getenv("PINECONE_API_KEY")
-)
+    pc=Pinecone(
+        api_key=os.getenv("PINECONE_API_KEY")
+    )
 
 
 reranker = CrossEncoder(
@@ -43,6 +43,7 @@ st.header("Welcome to the Youtube Chatbot")
 st.subheader("Enter your youtube video link, gemini api key and chat about anything from the youtube video ")
 st.subheader("Disclaimer:")
 st.text("The chatbot currently works for videos with english transcripts available")
+st.warning("Please enter your Google API key to continue")
 @tool
 def Create_embeddings(link: str) -> dict:
     """
@@ -334,8 +335,16 @@ if api:
         "Create_embeddings": Create_embeddings,
         "Query_Handler": Query_Handler
     }
+    for message in st.session_state.conversation_history:
+        if isinstance(message, HumanMessage):
+            with st.chat_message("user"):
+                st.markdown(message.content)
+        elif isinstance(message, AIMessage):
+            if message.content:   
+                with st.chat_message("assistant"):
+                    st.markdown(message.content)
     humanmsg = st.chat_input("You:")
-    if humanmsg and humanmsg.lower() != "exit":
+    if (humanmsg and humanmsg.lower() != "exit"):
         st.session_state.conversation_history.append(HumanMessage(content=humanmsg))
         response=llm_with_tools.invoke(st.session_state.conversation_history)
         st.session_state.conversation_history.append(AIMessage(content=response.content))
@@ -351,7 +360,6 @@ if api:
                 )
             response = llm_with_tools.invoke(st.session_state.conversation_history)
             st.session_state.conversation_history.append(AIMessage(content=response.content))    
-        with st.chat_message("assistant"):
-            st.markdown(response.content)
         humanmsg = st.chat_input("You: ")
-
+    del st.session_state.conversation_history
+    st.rerun()

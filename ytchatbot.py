@@ -36,7 +36,7 @@ if api:
 
 
 reranker = CrossEncoder(
-    ".models/reranker"
+    "./models/reranker"
 )
 
 st.header("Welcome to the Youtube Chatbot")
